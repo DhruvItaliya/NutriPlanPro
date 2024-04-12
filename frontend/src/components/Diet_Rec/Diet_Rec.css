@@ -1,0 +1,28 @@
+input::placeholder {
+  color: rgb(179, 172, 172); /* Set your desired color code */
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=range] {
+    /* -webkit-appearance: none;  */
+    appearance: none;
+    height: 5px;
+    accent-color: #4e3964;
+    outline: none;
+  }
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width:12px;
+    height: 12px;
+    border-radius:50% ;
+    background: #4e3964;
+    cursor: pointer;
+  }  
