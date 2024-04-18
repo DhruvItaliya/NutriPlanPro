@@ -14,6 +14,7 @@ import BlogPost from './components/BlogPost';
 import NotFound from './components/NotFound';
 import CommunityContextOrovider from './context/main';
 import Index from './components/pages/Community/index';
+import EditProfile from './components/EditProfile';
 
 function App() {
   const ConnString = import.meta.env.VITE_ConnString;
@@ -54,6 +55,7 @@ function App() {
           <Route path='/blog_post/:id' element={<BlogPost />} />
           <Route path='/diet-history' element={<History />} />
           <Route path="/community" element={<Index />}></Route>
+          <Route path="/editprofile" element={<EditProfile />}></Route>
           <Route path='/*' element={<NotFound />} />
         </Routes>
       </CommunityContextOrovider>

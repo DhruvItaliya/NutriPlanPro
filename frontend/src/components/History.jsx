@@ -44,6 +44,7 @@ const History = () => {
     return (
         <>
             <div className='px-4 md:px-20 lg:px-24 pt-5 pb-10'>
+            <img src="src/assets/bg-2.jpg" className='fixed top-5 left-0 w-full object-fit opacity-70 z-[-1]' alt="" />
                 <nav aria-label="Breadcrumb" className="flex z-10">
                     <ol className="flex overflow-hidden rounded-lg border border-gray-200 text-gray-600">
                         <li className="flex items-center">
@@ -86,16 +87,16 @@ const History = () => {
                     </ol>
                 </nav>
                 <div className='flex justify-center'>
-                    <div className='w-[80%]'>
-                        <h3 className='text-4xl my-3'>History</h3>
-                        {history.map((item) => (
+                    <div className='w-[80%] min-h-[16.5rem]'>
+                        <h3 className='text-4xl my-10  text-[#10383b] bg-[#faf5ff] w-fit px-2 py-1 rounded-md '>History</h3>
+                        {history.length>0?history.map((item) => (
                             <div key={item._id} className='bg-[#faf5ff] my-2 p-2 cursor-pointer outline outline-1 hover:shadow-lg hover:outline-[#4e3964] rounded-md' onClick={() => handleHistoryClick(item)}>
                                 <div className='text-sm text-gray-500'>
                                     {isToday(item.createdAt) ? new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) :
                                         new Date(item.createdAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                                 </div>
 
-                                {expandedHistory !== item._id && <div>{item.recommendedMeals[0][0]}...</div>}
+                                {expandedHistory !== item._id && <div>{item.selectedMeals[0][0]}...</div>}
 
                                 {/* Check if the history item is expanded and show additional details if it is */}
                                 {expandedHistory === item._id && (
@@ -168,7 +169,7 @@ const History = () => {
                                                 </div>
                                                 <hr />
                                                 {/* <div className='flex flex-col'> */}
-                                                {item.recommendedMeals.map((meal) => (
+                                                {item.selectedMeals.map((meal) => (
                                                     <>
                                                         <div className='flex items-center gap-1'>
                                                             <div className='w-1/4 py-1 rounded-md'> <img src={meal[1]} alt="" className='w-[90%] h-[80px] rounded-md' /></div>
@@ -187,7 +188,7 @@ const History = () => {
                                     </div>
                                 )}
                             </div>
-                        ))}
+                        )):<h1 className='text-center bg-[#faf5ff] h-48 text-4xl text-gray-400 rounded-md flex justify-center items-center border border-black'>Save Diet for History</h1>}
                     </div>
                 </div>
             </div>

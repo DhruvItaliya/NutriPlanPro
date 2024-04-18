@@ -7,25 +7,14 @@ const CommunityContextOrovider = ({ children }) => {
   const [update,setUpdate]= useState(false);
   const [post, setPost] = useState(null);
   const [userData, setUserData] = useState({ name: "", email: "" ,photo:"" });
-  const [scholarships, setScholarships] = useState(null);
   const [index, setIndex] = useState(0);
   const [sName, setSName] = useState(null);
   const handlePost = (data) => {
     setPost(data);
   };
-  const nextPage = () => {
-    setIndex((prevIndex) => prevIndex + 10);
-    console.log(index);
-  };
-  const prePage = () => {   
-    setIndex((prevIndex) => prevIndex - 10);
-    console.log(index);
-  };
 
   const context = {
     index,
-    nextPage,
-    prePage,
     sName,
     setSName,
     post,

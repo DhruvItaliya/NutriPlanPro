@@ -12,7 +12,7 @@ const userRegister = async (req, res) => {
         return res.status(400).json({ success: false, error: errorMessage })
     }
 
-    const { name, email, age, height, weight, gender,occupation, password } = req.body;
+    const { name, email, age, height, weight, gender, occupation, password } = req.body;
     console.log(occupation);
     // checking user is already exist or not 
     let user = await Register.findOne({ email });
@@ -146,9 +146,9 @@ const userLogin = async (req, res) => {
                     httpOnly: true,
                     maxAge: maxAge
                 }
-                res.status(201).cookie('token', token, options).json({ success: true, userData: userData,auth_token:token });
+                res.status(201).cookie('token', token, options).json({ success: true, userData: userData, auth_token: token });
             }
-            else{
+            else {
                 throw new Error('Invalid User Credentials');
             }
         }
@@ -162,14 +162,53 @@ const userLogin = async (req, res) => {
     }
 }
 
+const editProfile = async (req, res) => {
+    // getting error through validationResult from req object
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        const errorMessage = error.array().map(error => error.msg).join('\n');
+        return res.status(400).json({ success: false, error: errorMessage })
+    }
+
+    const { name, age, height, weight, gender, occupation } = req.body;
+    console.log(occupation);
+    const userId = req.user._id
+
+    // checking user is already exist or not 
+    let user = await Register.findById(userId);
+
+    try {
+        if (!user) {
+            return res.status(400).json({ error: "User not registered!" });
+        }
+
+        const updatedProfile = await Register.findByIdAndUpdate(userId, {
+            name,
+            age,
+            height,
+            weight,
+            gender,
+            occupation,
+        }, { new: true });
+        console.log("Updated Successfully")
+        res.status(201).json({ success: true,userData:updatedProfile });
+    }
+    catch (err) {
+        console.log(err.message);
+
+        // throwing error with status code 500 (Internal Server Error)
+        res.status(500).json({ error: err.message });
+    }
+}
+
 const saveDiet = async (req, res) => {
-    const { personalData, recommendedMeals } = req.body;
+    const { personalData, selectedMeals } = req.body;
 
     try {
         const history = await DietHistory({
             userId: req.user._id,
             personalData,
-            recommendedMeals
+            selectedMeals
         });
 
         await history.save();
@@ -184,14 +223,14 @@ const saveDiet = async (req, res) => {
     }
 }
 
-const getHistory = async (req,res) => {
-    try{
-        const history = await DietHistory.find({userId:req.user._id});
-        res.status(201).json({success:true,history});
+const getHistory = async (req, res) => {
+    try {
+        const history = await DietHistory.find({ userId: req.user._id });
+        res.status(201).json({ success: true, history });
     }
-    catch(err){
+    catch (err) {
         console.log(err.message);
-        res.status(500).json({success:false,error:"Internal Server Error"});
+        res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 }
 
@@ -204,4 +243,4 @@ const userLogout = (req, res) => {
     res.status(201).json({ success: true });
 }
 
-module.exports = { userLogin, userRegister, userLogout, saveDiet, getHistory };
+module.exports = { userLogin, userRegister, userLogout, editProfile, saveDiet, getHistory };

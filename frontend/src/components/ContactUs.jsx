@@ -36,7 +36,7 @@ const ContactUs = () => {
     return (
         <>
             <div className='px-4 md:px-20 lg:px-24 mt-5 mb-10'>
-            <img src="src/assets/pngegg.png" className='absolute top-0 left-0 w-full object-cover overflow-hidden opacity-20 z-[-1]' alt="" />
+            <img src="src/assets/bg-3.jpg" className='fixed top-5 left-0 w-full object-fit opacity-70 z-[-1]' alt="" />
                 <nav aria-label="Breadcrumb" className="flex">
                     <ol className="flex overflow-hidden rounded-lg border border-gray-200 text-gray-600">
                         <li className="flex items-center">
@@ -79,8 +79,8 @@ const ContactUs = () => {
                     </ol>
                 </nav>
                 <div className='flex flex-col justify-center items-center'>
-                    <h1 className='text-5xl my-10 font-[500] text-center text-[#10383b]'>Support & Feedback</h1>
-                    <section className=" mx-auto p-4 lg:w-[50%] rounded-lg shadow-md bg-[#bbd0d5]">
+                    <section className=" mx-auto p-4 lg:w-[50%] my-10 rounded-lg shadow-md bg-[#bbd0d5]">
+                    <h1 className='text-5xl mb-7 font-[500] text-center text-[#10383b]'>Support & Feedback</h1>
                         <form method="POST" onSubmit={handleSubmit}>
                             <div className='flex gap-4'>
                                 <div className="mb-4 flex-grow">

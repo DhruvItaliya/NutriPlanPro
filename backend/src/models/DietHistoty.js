@@ -19,7 +19,7 @@ const historySchema = new mongoose.Schema({
         bmr: { type: Number, required: true },
         required_calories: { type: Number, required: true }
     },
-    recommendedMeals: [[{ type: String, required: true }, { type: Number, required: true }, { type: Number, required: true }, { type: Number, required: true }, { type: Number, required: true }]]
+    selectedMeals: [[{ type: String, required: true }, { type: Number, required: true }, { type: Number, required: true }, { type: Number, required: true }, { type: Number, required: true }]]
 }, { timestamps: true });
 
 // we are creating model named Register based on userSchema and stored model in Register variable

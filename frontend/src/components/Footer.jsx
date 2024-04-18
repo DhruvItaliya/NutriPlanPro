@@ -2,14 +2,15 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer className="flex flex-col items-center bg-gray-100">
-            <div className=" flex justify-around max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+        <footer className="flex flex-col items-center py-2 bg-gray-100">
+            <div className="w-full flex justify-around max-w-[80%] items-center px-4 py-8 sm:px-6 lg:px-8">
                 <div>
                     <div className="flex justify-center text-[#10383b] text-4xl font-[500]">NutriPlanPro</div>
 
                     <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt consequuntur amet culpa cum
                         itaque neque.
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorem deleniti sequi obcaecati vero excepturi.
                     </p>
                 </div>
                 <div>
@@ -104,7 +105,7 @@ const Footer = () => {
                     </ul>
                 </div>
             </div>
-            <p>&copy; 2024, NutriPlanPro</p>
+            <p className='text-gray-500'>&copy; 2024, NutriPlanPro</p>
         </footer>
     )
 }

@@ -1,12 +1,12 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Answer from "./answer";
 import { CommunityContext } from "../../../context/main";
 import { FaUserCircle } from "react-icons/fa";
-const Card = ({ user, question, answer, tags, id,time }) => {
+const Card = ({ user, question, answer, tags, id, time }) => {
   const ConnString = import.meta.env.VITE_ConnString;
   const [newAnswer, setNewAnswer] = useState(""); // State for the new answer
   const { userData, setUpdate, update } = useContext(CommunityContext);
-  const [occupation,setOccupation] = useState(false);
+  const [occupation, setOccupation] = useState(false);
   const handleAddAnswer = async () => {
     const packet = {
       user_id: JSON.parse(localStorage.getItem('userData'))._id,
@@ -29,26 +29,26 @@ const Card = ({ user, question, answer, tags, id,time }) => {
     setNewAnswer("");
     setUpdate(!update)
   };
-  function checkOccupation(userOccupation) {
-    const validOccupations = ["Dietitian and Nutritionist", "Nutrition Coach", "Health Educator", "Fitness Trainer and Instructor", "Public Health Professional"];
-    return setOccupation(validOccupations.includes(userOccupation));
-}
-  useEffect(()=>{
+  // function checkOccupation(userOccupation) {
+  //   const validOccupations = ["Dietitian and Nutritionist", "Nutrition Coach", "Health Educator", "Fitness Trainer and Instructor", "Public Health Professional"];
+  //   return setOccupation(validOccupations.includes(userOccupation));
+  // }
+  useEffect(() => {
+    const validOccupations = ["Dietitians and Nutritionist", "Nutrition Coach", "Health Educator", "Fitness Trainer and Instructor", "Public Health Professional"];
+    const user_occupation = JSON.parse(localStorage.getItem('userData')).occupation
     function checkOccupation(userOccupation) {
-      const validOccupations = ["Dietitian and Nutritionist", "Nutrition Coach", "Health Educator", "Fitness Trainer and Instructor", "Public Health Professional"];
       return setOccupation(validOccupations.includes(userOccupation));
-  }
-  checkOccupation(user.occupation);
-  console.log(user.occupation);
-  },[])
+    }
+    checkOccupation(user_occupation);
+  }, [])
   const isToday = (createdAt) => {
     const createdAtDate = new Date(createdAt);
     const today = new Date();
     if (createdAtDate.getDate() === today.getDate() &&
-        createdAtDate.getMonth() === today.getMonth() &&
-        createdAtDate.getFullYear() === today.getFullYear()) return true;
+      createdAtDate.getMonth() === today.getMonth() &&
+      createdAtDate.getFullYear() === today.getFullYear()) return true;
     return false;
-}
+  }
   return (
     <div className="bg-white p-4 mb-4 rounded-lg shadow-md max-w-3xl hover:shadow-lg relative" >
       {/* Questioner details */}
@@ -73,7 +73,7 @@ const Card = ({ user, question, answer, tags, id,time }) => {
       </div >
 
       {/* Answers */}
-      {answer.map((ans, ind) => {
+      { answer.map((ans, ind) => {
         return < Answer key={ind} data={ans} />;
       })}
 
@@ -88,7 +88,7 @@ const Card = ({ user, question, answer, tags, id,time }) => {
       {/* end of Tags */}
 
       {/* Add Answer Input Field */}
-      { <div className="flex mt-4">
+      {occupation && <div className="flex mt-4">
         <input type="text" className="flex-1 py-2 px-3 border border-gray-300 rounded-lg placeholder-purple-600 focus:outline-none" placeholder="Add an answer..." value={newAnswer} onChange={(e) => setNewAnswer(e.target.value)} />
         <button className="bg-purple-600 text-white py-2 px-4 rounded-lg ml-2 hover:bg-purple-700 focus:outline-none" onClick={handleAddAnswer}>Add</button>
       </div >}

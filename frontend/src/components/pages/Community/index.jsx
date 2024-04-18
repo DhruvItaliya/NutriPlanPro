@@ -1,4 +1,4 @@
-  import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "./card";
 import { CommunityContext } from "../../../context/main";
 import { toast } from 'react-hot-toast';
@@ -75,7 +75,7 @@ export default function Index() {
     // Your logic for adding a question goes here
   };
 
-  return isAuthenticate?(
+  return isAuthenticate ? (
     <div className="flex flex-col space-y-16" style={{ minHeight: 'calc(100vh - 800px)' }}>
       <div className="community-page bg-[#10383b] p-3 mt-0 " >
         {post ? (
@@ -151,7 +151,7 @@ export default function Index() {
         </div>
       </div>
     </div>
-  ):(
+  ) : (
     <h1 className="text-center text-3xl text-gray-400 my-10">Please Login to get access</h1>
   )
 }

@@ -8,6 +8,7 @@ import { GiBackwardTime } from "react-icons/gi";
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../context/AuthContext';
+import Profile from './Profile';
 
 
 const Navbar = () => {
@@ -65,10 +66,15 @@ const Navbar = () => {
             </div>
 
 
-            <div className='flex items-center'>
+            <div className='flex items-center gap-2'>
                 {/* login button */}
-                {!isAuthenticate ? <button className='hidden sm:flex justify-center items-center lg:text-md bg-[#10383b] text-white rounded-full px-4 py-1 active:scale-95 hover:shadow-lg hover:bg-[#153336]' onClick={goToLogin} ><MdLogin size={20} className='mr-3' />Login</button> :
-                    <button className='hidden sm:flex justify-center items-center lg:text-md bg-[#10383b] text-white rounded-full px-4 py-1 active:scale-95 hover:shadow-lg hover:bg-[#153336]' onClick={handleLogout} ><MdLogout size={20} className='mr-3' />Logout</button>}
+                {!isAuthenticate ?
+                    <button className='hidden sm:flex justify-center items-center lg:text-md bg-[#10383b] text-white rounded-full px-4 py-1 active:scale-95 hover:shadow-lg hover:bg-[#153336]' onClick={goToLogin} ><MdLogin size={20} className='mr-3' />Login</button> :
+                    <>
+                        <Profile />
+                        <button className='hidden sm:flex justify-center items-center lg:text-md bg-[#10383b] text-white rounded-full px-4 py-1 active:scale-95 hover:shadow-lg hover:bg-[#153336]' onClick={handleLogout} ><MdLogout size={20} className='mr-3' />Logout</button>
+                    </>
+                }
             </div>
 
 

@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Diet_Rec.css';
 import { AuthContext } from '../../context/AuthContext';
-import { Link, json } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { Pie, Bar } from 'react-chartjs-2';
-import { Chart } from 'chart.js/auto';
-import bg from '../../assets/pngegg.png';
 export const Diet_Rec = () => {
     const ConnString = import.meta.env.VITE_ConnString;
     const { isAuthenticate, user, setIsAuthenticate } = useContext(AuthContext);
@@ -32,8 +30,9 @@ export const Diet_Rec = () => {
         setExercise(exercises[sliderValue]);
     }, [sliderValue]);
 
-    const storedUser = JSON.parse(localStorage.getItem('userData'));
+    let storedUser = JSON.parse(localStorage.getItem('userData'));
     useEffect(() => {
+        storedUser = JSON.parse(localStorage.getItem('userData'));
         setAge(storedUser.success ? storedUser.age : 2)
         setHeight(storedUser.success ? storedUser.height : 50)
         setWeight(storedUser.success ? storedUser.weight : 10)
@@ -56,7 +55,6 @@ export const Diet_Rec = () => {
         });
         const json = await response.json();
         if (json.success) {
-            console.log(json);
             setPersonalData({
                 bmi: json.calvalues[0],
                 bmr: json.calvalues[1],
@@ -66,13 +64,9 @@ export const Diet_Rec = () => {
                 goal: json.goal
             })
             const initialSelectedMeals = Array.from({ length: json.mealsperday }, () => json.meals[0]);
-            console.log(initialSelectedMeals);
             setRecommandedMeal(json.meals)
             setSelectedMeals(initialSelectedMeals)
-            console.log(recommendedMeals);
-            console.log(selectedMeals);
             setIsGenerate(true);
-            console.log(json)
             toast.success("Recommendation Generated Successfully !");
         }
         else {
@@ -80,14 +74,10 @@ export const Diet_Rec = () => {
         }
     }
 
-    const [labels, setLabels] = useState([]);
     const [data, setData] = useState([0, 0, 0]);
 
     useEffect(() => {
-        // console.log(selectedMeals);
-        const newLabels = [];
         let newData = [0, 0, 0];
-        console.log(selectedMeals);
         selectedMeals.forEach(item => {
             // newData[0] += item[1]; // Calories
             newData[0] += item[3] * 9; // Fat
@@ -96,7 +86,6 @@ export const Diet_Rec = () => {
         });
         newData = newData.map((item) => parseFloat(item.toFixed(2)));
         setData(newData)
-        console.log(newData);
     }, [recommendedMeals, selectedMeals])
 
     const handleMealSelection = (e, id) => {
@@ -106,7 +95,6 @@ export const Diet_Rec = () => {
         });
         const updatedSelectedMeals = [...selectedMeals];
         updatedSelectedMeals[id] = selectedMeal;
-        // console.log();
         setSelectedMeals(updatedSelectedMeals);
     };
 
@@ -126,7 +114,7 @@ export const Diet_Rec = () => {
                 bmr: personalData.bmr,
                 required_calories: personalData.calories
             },
-            recommendedMeals: recommendedMeals
+            selectedMeals: selectedMeals
         }
         const response = await fetch(`${ConnString}/auth/save-diet`, {
             method: "POST",
@@ -134,11 +122,10 @@ export const Diet_Rec = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ personalData: dataToBeSaved.personalData, recommendedMeals: recommendedMeals })
+            body: JSON.stringify({ personalData: dataToBeSaved.personalData, selectedMeals: selectedMeals })
         });
         const json = await response.json();
         if (json.success) {
-            console.log(json)
             toast.success('Diet Saved!')
         }
         else {

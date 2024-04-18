@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {userLogin,userRegister,userLogout,saveDiet,getHistory} = require('../../controllers/userController');
+const {userLogin,userRegister,editProfile,userLogout,saveDiet,getHistory} = require('../../controllers/userController');
 const { getAllPost, addAnswer,addQuestion} =  require("../../controllers/communityController");
 const auth = require('../../middlewares/auth');
 
@@ -25,6 +25,7 @@ router.post('/login',[
 
 router.post('/save-diet',auth,saveDiet);
 router.get('/gethistory',auth,getHistory);
+router.post('/editprofile',auth,editProfile);
 
 router.get('/getuser',auth,(req,res)=>{
     try{
